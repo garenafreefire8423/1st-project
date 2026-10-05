@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Data Display</title>
+</head>
+<body bgcolor="pink">
+    
+  <!-- आपका फॉर्म -->
+  <form>
+    <input type="text" placeholder="Name" id="name">
+    <input type="email" placeholder="Email ID" id="email">
+    <input type="password" placeholder="Pass" id="password">
+    <button id="submit-btn">Submit</button>
+  </form>
+
+  <!-- यह नया सेक्शन है जहाँ डेटा शो होगा -->
+  <div style="background-color: white; margin-top: 50px; padding: 60px; border-radius: 10px; width: fit-content;">
+      <h3>Saved Users</h3>
+      <!-- ol (ordered list) अपने आप 1, 2, 3... नंबर्स जनरेट करेगा -->
+      <ol id="display-list"></ol>
+  </div>
+
+<script>
+  // Variables के नाम थोड़े बदल दिए हैं ताकि window.name से conflict ना हो
+  let nameInput = document.getElementById("name");
+  let emailInput = document.getElementById("email");
+  let passwordInput = document.getElementById("password");
+  
+  let btn = document.getElementById("submit-btn"); 
+  let displayList = document.getElementById("display-list"); // जहाँ डेटा दिखाना है
+  
+  let users = [];
+  
+  btn.addEventListener("click", (e) => { 
+    e.preventDefault(); 
+    
+    // अगर इनपुट खाली है तो सबमिट होने से रोकना (Optional but good practice)
+    if(nameInput.value === "" || emailInput.value === "") {
+        alert("Please enter Name and Email!");
+        return;
+    }
+   
+    let user = { 
+      name: nameInput.value,
+      email: emailInput.value,
+      password: passwordInput.value
+    };
+    
+    users.push(user); 
+    
+    // वेब पेज पर डेटा प्रिंट करने का लॉजिक
+    let listItem = document.createElement("li"); // नया लिस्ट आइटम बनाना
+    listItem.innerHTML = `<strong>Name:</strong> ${user.name} | <strong>Email:</strong> ${user.email} | <strong>Pass:</strong> ${user.password}`;
+    
+    displayList.appendChild(listItem); // लिस्ट में आइटम को जोड़ना
+
+    // सबमिट होने के बाद इनपुट बॉक्स खाली करना
+    nameInput.value = "";
+    emailInput.value = ""; 
+    passwordInput.value = "";
+    
+    console.log(users);
+  });
+</script>
+
+</body>
+</html>
